@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Real-Time Document Editor</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    #editor {
+      width: 80%;
+      height: 400px;
+      padding: 20px;
+      font-size: 16px;
+      line-height: 1.6;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      resize: none;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+      #editor {
+        width: 95%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>📝 Real-Time Collaborative Doc Editor</h1>
+  <textarea id="editor" placeholder="Start typing here..."></textarea>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const editor = document.getElementById('editor');
+
+    // Emit changes to server
+    editor.addEventListener('input', () => {
+      const content = editor.value;
+      socket.emit('docChange', content);
+    });
+
+    // Listen for changes from server
+    socket.on('docChange', (content) => {
+      // Only update if content is different (to prevent loop)
+      if (editor.value !== content) {
+        editor.value = content;
+      }
+    });
+  </script>
+</body>
+</html>

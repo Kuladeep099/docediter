@@ -56,5 +56,7 @@ The application uses **WebSockets** (via Socket.IO) to maintain a persistent con
 
 ---
 
-## 📂 Folder Structure
+## Output
+
+<img width="1352" height="912" alt="Image" src="https://github.com/user-attachments/assets/df95f936-03e2-4fe2-bd38-ee4db4d1d9ac" />
 
